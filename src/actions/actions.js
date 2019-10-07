@@ -25,23 +25,30 @@ export const login = (email, password) => dispatch => {
     .catch(console.error)
 }
 
-export const SIGN_UP = 'SIGN_UP'
-
-function signupCredentials (payload) {
-    return {
-        type: SIGN_UP,
-        payload
-    }
-}
-
-//data = 'email','password'
 export const signup = (email, password) => dispatch => {
     console.log('credentials from the action creator')
   request
     .post(`${baseUrl}/user`)
     .send({email, password})
-    .then(response => {
-        const action = signupCredentials(response.body)
+    .then(console.log('Sign up successful'))
+    .catch(console.error)
+}
+
+export const NEW_ROOM = 'NEW_ROOM'
+
+function newRoom(payload) {
+  return {
+    type: NEW_ROOM,
+    payload
+  }
+}
+
+export const createRoom = data => (dispatch) => {
+    request
+        .post(`${baseUrl}/game`)
+        .send(data)
+        .then(response => {
+            const action = newRoom(response.body)
         dispatch(action)
     })
     .catch(console.error)
