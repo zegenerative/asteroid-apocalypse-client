@@ -4,7 +4,7 @@ export default function (state = '', action = {}) {
             console.log(action.payload.jwt)
             return action.payload.jwt
         case 'SIGN_UP':
-            console.log('sign up credentials from reducer')
+            console.log('sign up credentials from reducer', action.payload)
             return action.payload
         default: 
             return state

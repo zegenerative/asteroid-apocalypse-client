@@ -25,14 +25,14 @@ export const login = (email, password) => dispatch => {
     .catch(console.error)
 }
 
-export const SIGN_UP = 'SIGN_UP'
+// export const SIGN_UP = 'SIGN_UP'
 
-function signupCredentials (payload) {
-    return {
-        type: SIGN_UP,
-        payload
-    }
-}
+// function signupCredentials (payload) {
+//     return {
+//         type: SIGN_UP,
+//         payload
+//     }
+// }
 
 //data = 'email','password'
 export const signup = (email, password) => dispatch => {
@@ -40,9 +40,6 @@ export const signup = (email, password) => dispatch => {
   request
     .post(`${baseUrl}/user`)
     .send({email, password})
-    .then(response => {
-        const action = signupCredentials(response.body)
-        dispatch(action)
-    })
+    .then(console.log('Sign up successful'))
     .catch(console.error)
 }
