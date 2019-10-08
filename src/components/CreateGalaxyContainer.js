@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createRoom } from '../actions/actions'
-import CreateRoom from './CreateRoom'
+import { createGalaxy } from '../actions/actions'
+import CreateGalaxy from './CreateGalaxy'
 
-class CreateRoomContainer extends React.Component {
+class CreateGalaxyContainer extends React.Component {
   state = {
     title: ''
   }
@@ -24,7 +24,7 @@ class CreateRoomContainer extends React.Component {
 
   render() {
     return (<div>
-        <CreateRoom
+        <CreateGalaxy
             onSubmit={this.onSubmit}
             onChange={this.onChange}
             values={this.state}
@@ -34,4 +34,4 @@ class CreateRoomContainer extends React.Component {
   }
 }
 
-export default connect(null, { createRoom })(CreateRoomContainer)
+export default connect(null, { createGalaxy })(CreateGalaxyContainer)

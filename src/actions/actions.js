@@ -26,7 +26,6 @@ export const login = (email, password) => dispatch => {
 }
 
 export const signup = (email, password) => dispatch => {
-    console.log('credentials from the action creator')
   request
     .post(`${baseUrl}/user`)
     .send({email, password})
@@ -36,19 +35,19 @@ export const signup = (email, password) => dispatch => {
 
 export const NEW_ROOM = 'NEW_ROOM'
 
-function newRoom(payload) {
+function newGalaxy(payload) {
   return {
     type: NEW_ROOM,
     payload
   }
 }
 
-export const createRoom = data => (dispatch) => {
+export const createGalaxy = data => (dispatch) => {
     request
         .post(`${baseUrl}/game`)
         .send(data)
         .then(response => {
-            const action = newRoom(response.body)
+            const action = newGalaxy(response.body)
         dispatch(action)
     })
     .catch(console.error)

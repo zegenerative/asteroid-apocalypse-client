@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import user from './user'
-import rooms from './rooms'
+import galaxies from './galaxies'
 
 export default combineReducers({
     user, 
-    rooms
+    galaxies
 })

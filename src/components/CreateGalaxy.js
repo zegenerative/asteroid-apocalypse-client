@@ -1,19 +1,19 @@
 import React from 'react'
 
-export default function AdCreateFrom(props) {
+export default function CreateGalaxy(props) {
 
     const { onChange, onSubmit, values } = props
 
     return( <div>
-                <h3>Create a room:</h3>
+                <h3>Create a galaxy:</h3>
                 <form onSubmit={onSubmit}> 
-                    <label>Title:
+                    <label>Name:
                         <input 
                             type="text" 
                             onChange={onChange}
                             value={values.title}
-                            name='title'
-                            placeholder='title'
+                            name='Name'
+                            placeholder='name'
                         />
                     </label>
                     <button>Submit</button>
