@@ -12,7 +12,7 @@ export default function CreateGalaxy(props) {
                             type="text" 
                             onChange={onChange}
                             value={values.title}
-                            name='Name'
+                            name='title'
                             placeholder='name'
                         />
                     </label>

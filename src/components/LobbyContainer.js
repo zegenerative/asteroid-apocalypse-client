@@ -10,7 +10,7 @@ class LobbyContainer extends React.Component {
     return (
     <Lobby 
     user={this.props.user}
-    // rooms={this.props.rooms}
+    galaxies={this.props.galaxies}
     />
     )
   }
@@ -19,7 +19,7 @@ class LobbyContainer extends React.Component {
 function mapStateToProps (state) {
   return { 
       user: state.user,
-    //   rooms: state.rooms
+      galaxies: state.galaxies
     }
 }
 

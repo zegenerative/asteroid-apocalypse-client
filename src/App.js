@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import store from './store'
 import { Provider } from 'react-redux'
-// import css from'./App.css'
+import css from'./App.css'
 import LobbyContainer from './components/LobbyContainer'
 
 class App extends Component {

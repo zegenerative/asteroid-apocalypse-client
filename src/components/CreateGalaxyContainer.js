@@ -4,7 +4,7 @@ import { createGalaxy } from '../actions/actions'
 import CreateGalaxy from './CreateGalaxy'
 
 class CreateGalaxyContainer extends React.Component {
-  state = {
+  state = { 
     title: ''
   }
 
@@ -16,10 +16,10 @@ class CreateGalaxyContainer extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.props.createRoom(this.state)
     this.setState({
         title: ''
       })
+    this.props.createGalaxy(this.state)
   }
 
   render() {
@@ -33,5 +33,11 @@ class CreateGalaxyContainer extends React.Component {
     )
   }
 }
+
+// function mapStateToProps (state) {
+//   return { 
+//       galaxies: state.galaxies
+//     }
+// }
 
 export default connect(null, { createGalaxy })(CreateGalaxyContainer)
