@@ -11,8 +11,8 @@ export default function CreateGalaxy(props) {
                         <input 
                             type="text" 
                             onChange={onChange}
-                            value={values.title}
-                            name='title'
+                            value={values.galaxyName}
+                            name='galaxyName'
                             placeholder='name'
                         />
                     </label>

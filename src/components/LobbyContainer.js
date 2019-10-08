@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Lobby from './Lobby'
+import { getGalaxies } from '../actions/actions'
 
 class LobbyContainer extends React.Component {
   componentDidMount() {
+    this.props.getGalaxies()
   }
 
   render() {
@@ -23,4 +25,4 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps)(LobbyContainer)
+export default connect(mapStateToProps, { getGalaxies })(LobbyContainer)

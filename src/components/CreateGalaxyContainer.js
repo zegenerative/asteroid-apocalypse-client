@@ -5,7 +5,7 @@ import CreateGalaxy from './CreateGalaxy'
 
 class CreateGalaxyContainer extends React.Component {
   state = { 
-    title: ''
+    galaxyName: ''
   }
 
   onChange = (event) => {
@@ -17,7 +17,7 @@ class CreateGalaxyContainer extends React.Component {
   onSubmit = (event) => {
     event.preventDefault()
     this.setState({
-        title: ''
+        galaxyName: ''
       })
     this.props.createGalaxy(this.state)
   }

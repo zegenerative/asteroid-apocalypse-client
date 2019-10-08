@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import LoginFormContainer from './LoginFormContainer'
 import SignUpContainer from './SignUpContainer'
-import CreateRoomContainer from './CreateGalaxyContainer'
+import CreateGalaxyContainer from './CreateGalaxyContainer'
 
 export default class Lobby extends React.Component {
     render() {
@@ -18,20 +18,21 @@ export default class Lobby extends React.Component {
         if(user) {
             return(
                 <div>
-                    <h1>Choose a galaxy!</h1>
+                    <CreateGalaxyContainer />
+                    <h1>Or choose a galaxy!</h1>
                         {galaxies.map(galaxy => {
                             const random = Math.floor(Math.random() * 5)
                             console.log(random)
                             return(
                                 <div key={galaxy.id}>
-                                    <h3>{galaxy.title}</h3>
+                                    <h3>{galaxy.galaxyName}</h3>
                                     <Link to={`/game/${galaxy.id}`}>
                                     <img className='galaxies' src={imgUrls[random]} width='30%' alt='galaxy'></img>
                                     </Link>
                                 </div>
                             )
                         })}
-                    <CreateRoomContainer />
+                    
                 </div>
             )
         } else {

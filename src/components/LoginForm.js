@@ -11,8 +11,8 @@ export default function LoginForm1(props) {
                         <input 
                             type="text" 
                             onChange={onChange}
-                            value={values.name}
-                            name='name'
+                            value={values.username}
+                            name='username'
                             placeholder='name'
                         />
                     </label>
