@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createRoom } from '../actions/actions'
-import CreateRoom from './CreateRoom'
+import { createGalaxy } from '../actions/actions'
+import CreateGalaxy from './CreateGalaxy'
 
-class CreateRoomContainer extends React.Component {
-  state = {
-    title: ''
+class CreateGalaxyContainer extends React.Component {
+  state = { 
+    galaxyName: ''
   }
 
   onChange = (event) => {
@@ -16,15 +16,15 @@ class CreateRoomContainer extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.props.createRoom(this.state)
     this.setState({
-        title: ''
+        galaxyName: ''
       })
+    this.props.createGalaxy(this.state)
   }
 
   render() {
     return (<div>
-        <CreateRoom
+        <CreateGalaxy
             onSubmit={this.onSubmit}
             onChange={this.onChange}
             values={this.state}
@@ -34,4 +34,10 @@ class CreateRoomContainer extends React.Component {
   }
 }
 
-export default connect(null, { createRoom })(CreateRoomContainer)
+// function mapStateToProps (state) {
+//   return { 
+//       galaxies: state.galaxies
+//     }
+// }
+
+export default connect(null, { createGalaxy })(CreateGalaxyContainer)

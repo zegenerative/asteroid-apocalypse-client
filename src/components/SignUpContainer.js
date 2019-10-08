@@ -4,15 +4,16 @@ import { signup } from '../actions/actions'
 import SignUp from './SignUp'
 
 class SignUpContainer extends React.Component {
-  state = { email: '', password: '' }
+  state = { username: '', email: '', password: '' }
 
   componentDidMount() {
   }
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.props.signup(this.state.email, this.state.password)
+    this.props.signup(this.state.username, this.state.email, this.state.password)
     this.setState({
+        username: '',
         email: '',
         password: ''
     })

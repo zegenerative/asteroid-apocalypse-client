@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: black;x§
 }
 
 .App-logo {
@@ -19,4 +20,9 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.galaxies {
+  display: flex;
+  flex-flow: row;
 }
