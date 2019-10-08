@@ -1,7 +1,8 @@
 import request from 'superagent'
 
-const baseUrl = 'http://localhost:4000'
-// const baseUrl = 'heroku link'
+// const baseUrl = 'http://localhost:6000'
+// const baseUrl = 'http://83.163.69.253:4000'
+const baseUrl = 'https://desolate-escarpment-23810.herokuapp.com'
 
 export const LOGIN = 'LOGIN'
 
@@ -13,10 +14,10 @@ function loginCredentials (payload) {
 }
 
 //data = 'email','password'
-export const login = (email, password) => dispatch => {
+export const login = (name, email, password) => dispatch => {
   request
     .post(`${baseUrl}/login`)
-    .send({email, password})
+    .send({name, email, password})
     .then(response => {
         //I expect the response to have a jwt
         const action = loginCredentials(response.body)
@@ -47,7 +48,7 @@ export const getGalaxies = () => (dispatch, getState) => {
     const { galaxies } = state
 
     if (!galaxies.length) {
-        request(`${baseUrl}/games`)
+        request(`${baseUrl}/game`)
         .then(response => {
             const action = allGalaxies(response.body)
             dispatch(action)

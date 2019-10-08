@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom'
 import LoginFormContainer from './LoginFormContainer'
 import SignUpContainer from './SignUpContainer'
 import CreateRoomContainer from './CreateGalaxyContainer'
-import css from'../App.css'
 
 export default class Lobby extends React.Component {
-    
     render() {
-
         const imgUrls = [
             'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.freepngimg.com%2Fdownload%2Fgalaxy%2F2-2-galaxy-transparent.png&f=1&nofb=1',
             'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn130.picsart.com%2F234283200048211.png&f=1&nofb=1',
