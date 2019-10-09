@@ -1,7 +1,7 @@
 export default function (state = '', action = {}) {
     switch(action.type) {
         case 'LOGIN':
-            return action.payload.jwt
+            return action.payload
         case 'WINNER':
             return action.payload
         case 'TOTAL':

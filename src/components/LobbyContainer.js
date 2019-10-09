@@ -5,13 +5,14 @@ import { getGalaxies } from '../actions/actions'
 
 class LobbyContainer extends React.Component {
   componentDidMount() {
-    this.props.getGalaxies()
+    this.props.getGalaxies() // we should be logged in for this
   }
 
   render() {
     return (
     <Lobby 
-    user={this.props.user}
+    token={this.props.token}
+    username={this.props.username}
     galaxies={this.props.galaxies}
     />
     )
@@ -20,8 +21,9 @@ class LobbyContainer extends React.Component {
 
 function mapStateToProps (state) {
   return { 
-      user: state.user,
-      galaxies: state.galaxies
+      token: state.user.jwt,
+      username: state.user.username,
+      galaxies: state.galaxies,
     }
 }
 

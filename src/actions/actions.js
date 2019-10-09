@@ -1,6 +1,6 @@
 import request from 'superagent'
 
-// const baseUrl = 'http://localhost:6000'
+// const baseUrl = 'http://localhost:4000'
 // const baseUrl = 'http://83.163.69.253:4000'
 const baseUrl = 'https://desolate-escarpment-23810.herokuapp.com'
 
@@ -21,7 +21,9 @@ export const login = (username, email, password) => dispatch => {
     .then(response => {
         //I expect the response to have a jwt
         const action = loginCredentials(response.body)
+        // const action_username = userName(username)
         dispatch(action)
+        // dispatch(action_username)
     })
     .catch(console.error)
 }
@@ -45,12 +47,13 @@ function allGalaxies (payload) {
 export const getGalaxies = () => (dispatch, getState) => {
     const state = getState()
     const { user, galaxies } = state
+    const token = user.jwt
 
     if (!galaxies.length) {
       request(`${baseUrl}/room`)
-        .set('Authorization', `Bearer ${user}`) 
+        .set('Authorization', `Bearer ${token}`) 
         .then(response => {
-            console.log('rooms', response.body)
+            console.log('galaxies: ', response.body)
             const action = allGalaxies(response.body)
             dispatch(action)
         })
@@ -70,9 +73,10 @@ function newGalaxy(payload) {
 export const createGalaxy = data => (dispatch, getState) => {
     const state = getState()
     const { user } = state
+    const token = user.jwt
     request
         .post(`${baseUrl}/room`)
-        .set('Authorization', `Bearer ${user}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(data)
         .then(response => {
             const action = newGalaxy(response.body)
@@ -101,6 +105,38 @@ export const getWinner = data => (dispatch) => {
         dispatch(action)
     })
     .catch(console.error)
+}
+
+export const GALAXY_STATUS = 'GALAXY_STATUS'
+
+function galaxyStatus(payload) {
+  return {
+    type: GALAXY_STATUS,
+    payload
+  }
+}
+
+export const getGalaxyStatus = (user, id) => (dispatch) => {
+  request
+      .get(`${baseUrl}/room/${id}`)
+      .set('Authorization', `Bearer ${user}`)
+      .then(response => {
+          const action = galaxyStatus(response.body)
+      dispatch(action)
+  })
+  .catch(console.error)
+}
+
+export const updateGalaxyStatus = (user, id, newStatus) => (dispatch) => {
+  request
+      .put(`${baseUrl}/room/${id}`)
+      .set('Authorization', `Bearer ${user}`)
+      .send({ status: newStatus })
+      .then(response => {
+          const action = galaxyStatus(response.body)
+      dispatch(action)
+  })
+  .catch(console.error)
 }
 
 //update total score
