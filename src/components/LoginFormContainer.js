@@ -41,7 +41,7 @@ class LoginFormContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.user
+    token: state.user.jwt
   }
 }
 

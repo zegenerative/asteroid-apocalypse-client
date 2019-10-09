@@ -50,10 +50,10 @@ export default function (s) {
     s.createCanvas(s.windowWidth, s.windowHeight);
     // let particle = new Particle(s.width/2, s.height - 100);
     for (let i = 0; i < 7; i++) {
-        asteroids.push(new Asteroid(Math.floor(Math.random() * s.width), Math.floor(Math.random() * s.height), Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 10), Math.random() * 10));
-     }
+        asteroids.push(new Asteroid(Math.floor(Math.random() * s.width), Math.floor(Math.random() * s.height), Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 2), Math.random() * 2));
+        }
     }
-
+    
     s.mousePressed = function() {
         let x = (s.sin(angle) * s.TWO_PI);
         let y = (s.cos(angle) * s.TWO_PI);
@@ -61,6 +61,7 @@ export default function (s) {
     }
 
     s.draw = function(){
+    
     s.background(0);
     
     for (let i = 0; i < bullets.length; i++) {
@@ -88,5 +89,6 @@ export default function (s) {
     s.ellipse(0, -100, 5);
 
     keyPressed();
+    // spawn();
     }
 }
