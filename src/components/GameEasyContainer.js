@@ -3,6 +3,7 @@ import P5Wrapper from 'react-p5-wrapper'
 import sketch1 from './Games/sketch1'
 import { connect } from 'react-redux'
 import { totalScore } from '../actions/actions'
+import GameStats from './GameStats'
 
 class GameEasyContainer extends Component {
 
@@ -13,6 +14,7 @@ class GameEasyContainer extends Component {
     render() {
         return (
             <div>
+                <header><GameStats /></header>
                 <P5Wrapper sketch={sketch1}></P5Wrapper>
             </div>
         )

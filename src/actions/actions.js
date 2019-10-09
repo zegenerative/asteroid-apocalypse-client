@@ -45,6 +45,7 @@ function allGalaxies (payload) {
 export const getGalaxies = () => (dispatch, getState) => {
     const state = getState()
     const { user, galaxies } = state
+    console.log('USER?', user)
 
     if (!galaxies.length) {
       request(`${baseUrl}/room`)
