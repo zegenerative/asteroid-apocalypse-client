@@ -3,9 +3,9 @@ export default function (state = [], action = {}) {
         case 'ALL_GALAXIES':
             return action.payload
         case 'NEW_GALAXY':
-            console.log('id from the reducer: ', action.payload)
             return [ action.payload, ...state ]
-        case 'GALAXY_STATUS':
+        case 'STREAM':
+            console.log('WHAT IS THE STREAM action.PAYLOAD?', action.payload)
             return action.payload
         default: 
             return state

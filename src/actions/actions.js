@@ -1,8 +1,5 @@
 import request from 'superagent'
-
-// const baseUrl = 'http://localhost:4000'
-// const baseUrl = 'http://83.163.69.253:4000'
-const baseUrl = 'https://desolate-escarpment-23810.herokuapp.com'
+import {url} from '../constants/url'
 
 export const LOGIN = 'LOGIN'
 
@@ -16,7 +13,7 @@ function loginCredentials (payload) {
 //data = 'email','password'
 export const login = (username, email, password) => dispatch => {
   request
-    .post(`${baseUrl}/login`)
+    .post(`${url}/login`)
     .send({username, email, password})
     .then(response => {
         //I expect the response to have a jwt
@@ -30,7 +27,7 @@ export const login = (username, email, password) => dispatch => {
 
 export const signup = (username, email, password) => dispatch => {
   request
-    .post(`${baseUrl}/user`)
+    .post(`${url}/user`)
     .send({username, email, password})
     .catch(console.error)
 }
@@ -50,10 +47,10 @@ export const getGalaxies = () => (dispatch, getState) => {
     const token = user.jwt
 
     if (!galaxies.length) {
-      request(`${baseUrl}/room`)
+      request(`${url}/room`)
         .set('Authorization', `Bearer ${token}`) 
         .then(response => {
-            console.log('galaxies: ', response.body)
+            // console.log('galaxies: ', response.body)
             const action = allGalaxies(response.body)
             dispatch(action)
         })
@@ -61,27 +58,14 @@ export const getGalaxies = () => (dispatch, getState) => {
     }
 }
 
-export const NEW_GALAXY = 'NEW_GALAXY'
-
-function newGalaxy(payload) {
-  return {
-    type: NEW_GALAXY,
-    payload
-  }
-}
-
 export const createGalaxy = data => (dispatch, getState) => {
     const state = getState()
     const { user } = state
     const token = user.jwt
     request
-        .post(`${baseUrl}/room`)
+        .post(`${url}/room`)
         .set('Authorization', `Bearer ${token}`)
         .send(data)
-        .then(response => {
-            const action = newGalaxy(response.body)
-        dispatch(action)
-    })
     .catch(console.error)
 }
 
@@ -98,7 +82,7 @@ function winner(payload) {
 }
 
 export const getWinner = data => (dispatch) => {
-    request(`${baseUrl}/room/winner`)
+    request(`${url}/room/winner`)
         .send(data)
         .then(response => {
             const action = winner(response.body)
@@ -118,7 +102,7 @@ function galaxyStatus(payload) {
 
 export const getGalaxyStatus = (user, id) => (dispatch) => {
   request
-      .get(`${baseUrl}/room/${id}`)
+      .get(`${url}/room/${id}`)
       .set('Authorization', `Bearer ${user}`)
       .then(response => {
           const action = galaxyStatus(response.body)
@@ -127,11 +111,11 @@ export const getGalaxyStatus = (user, id) => (dispatch) => {
   .catch(console.error)
 }
 
-export const updateGalaxyStatus = (user, id, newStatus) => (dispatch) => {
+export const updateGalaxyStatus = (user, id) => (dispatch) => {
   request
-      .put(`${baseUrl}/room/${id}`)
+      .put(`${url}/room/${id}`)
       .set('Authorization', `Bearer ${user}`)
-      .send({ status: newStatus })
+      .send({ roomId: id })
       .then(response => {
           const action = galaxyStatus(response.body)
       dispatch(action)
@@ -153,7 +137,7 @@ export const totalScore = (id, points) => (dispatch, getState) => {
   const state = getState()
   const { user } = state
   request
-      .put(`${baseUrl}/user/${id}`)
+      .put(`${url}/user/${id}`)
       .set('Authorization', `Bearer ${user}`)
       .send({ totalScore: 12 })
       .then(response => {
@@ -174,10 +158,58 @@ function rank(payload) {
 }
 
 export const getRank = (id) => (dispatch) => {
-  request(`${baseUrl}/user/${id}/rank`)
+  request(`${url}/user/${id}/rank`)
       .then(response => {
           const action = rank(response.body)
       dispatch(action)
   })
   .catch(console.error)
 }
+
+export const STREAM = 'STREAM'
+
+export const fetchGalaxies = (payload) => ({
+    type: STREAM,
+    payload
+})
+
+export const UPDATE_SOME_STATS = 'UPDATE_SOME_STATS'
+
+export const updateStats = (payload) => ({
+    type: UPDATE_SOME_STATS,
+    payload
+})
+
+///////////////////////////GAMEACTIONS
+// export const addCount = current => {
+//   return {
+//     type: "COUNT",
+//     payload: current + 1
+//   };
+// };
+
+// export const updateStreak = value => {
+//   return {
+//     type: "STREAK",
+//     payload: value
+//   };
+// };
+
+// export const addScore = current => {
+//   return {
+//     type: "SCORE",
+//     payload: current
+//   };
+// };
+// export const addWin = current => {
+//   return {
+//     type: "WIN_PERCENT"
+//   };
+// };
+
+// export const addLevel = current => {
+//   return {
+//     type: "LEVEL",
+//     payload: current + 1
+//   };
+// };

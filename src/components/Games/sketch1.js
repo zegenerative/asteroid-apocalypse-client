@@ -1,7 +1,11 @@
+import store from '../../store';
+
 export default function (s) {
     function Bullet(x, y, angle) {
         this.x = x;
         this.y = y;
+        this.eWidth = 5;
+        this.hit = false;
         
         this.xspeed = 20;
         this.yspeed = 20;
@@ -10,9 +14,15 @@ export default function (s) {
             this.y -= this.yspeed * s.cos(angle);
             this.x += this.xspeed * s.sin(angle);
         }
+
+        this.delete = function() {
+            this.hit = true;
+        }
         
         this.show = function() {
-            s.ellipse(this.x, this.y, 5);
+            if(this.hit === false) {
+                s.ellipse(this.x, this.y, this.eWidth);
+            }
         }
     }
 
@@ -23,35 +33,64 @@ export default function (s) {
         this.eHeight = eHeight;
         this.xspeed = xspeed;
         this.yspeed = yspeed;
+        this.hit = false;
         
         this.update = function() {
-          this.y -= this.yspeed;
+          this.y += this.yspeed;
           this.x += this.xspeed;
+        }
+
+        this.intersects = function(other) {
+            let d = s.dist(this.x, this.y, other.x, other.y);
+            if(d < this.eWidth + other.eWidth) {
+              return true; 
+            } else {
+              return false;
+            }
+          }
+
+        this.delete = function() {
+        this.hit = true;
         }
         
         this.show = function() {
-          s.ellipse(this.x, this.y, this.eWidth, this.eHeight);
+            if(this.hit === false) {
+                s.noStroke();
+                s.fill(255);
+                s.ellipse(this.x, this.y, this.eWidth, this.eHeight);
+            }        
         }
-      }
+    }
 
     let angle = 0;
-    var bullets = [];
-    let asteroids = []
+    let bullets = [];
+    let asteroids = [];
+    let spawnFreq = 3;
+    let generate = true;
+    let points = 0;
 
     function keyPressed() {
         if (s.key === 'a' && s.keyIsPressed === true) {
-            angle -= 0.05;
+            angle -= 0.02;
         } else if (s.key === 'd' && s.keyIsPressed === true) {
-            angle += 0.05;
+            angle += 0.02;
+        }
+    }
+
+    function spawn() {
+        let timePassed = Math.floor(s.millis() / 100);
+        let spawnTime = timePassed % spawnFreq;
+        if(spawnTime === 0 && generate === true) {
+          generate = false;
+          console.log('asteroid incoming!');
+          asteroids.push(new Asteroid(Math.floor(Math.random() * s.width), Math.floor(Math.random() * s.height) - s.height, Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 2), Math.random() * 2));
+        } else if (spawnTime !== 0) {
+          generate = true;
         }
     }
 
     s.setup = function() {
-    s.createCanvas(s.windowWidth, s.windowHeight);
-    // let particle = new Particle(s.width/2, s.height - 100);
-    for (let i = 0; i < 7; i++) {
-        asteroids.push(new Asteroid(Math.floor(Math.random() * s.width), Math.floor(Math.random() * s.height), Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 100) + 10, Math.floor(Math.random() * 2), Math.random() * 2));
-        }
+        s.createCanvas(s.windowWidth, s.windowHeight);
     }
     
     s.mousePressed = function() {
@@ -69,9 +108,32 @@ export default function (s) {
         bullets[i].show();
     }
 
-    for (let i = 0; i < asteroids.length; i++) {
+    if(points > 50) {
+        store.dispatch({
+            type: 'GAME_ENDS',
+            payload: true
+        })
+    }
+
+    for(let i = 0; i < asteroids.length; i++) {
         asteroids[i].update();
         asteroids[i].show();
+        for(let j = 0; j <bullets.length; j++) {
+          if(asteroids[i].intersects(bullets[j])) {
+            console.log('hit!');
+            //asteroids[i].delete();
+            asteroids.splice(i, 1);
+            //bullets[j].delete();
+            bullets.splice(j, 1);
+            points += 1;
+            store.dispatch({
+                type: 'UPDATE_SCORE',
+                payload: { 
+                    score: points
+                }
+            })
+          }  
+        }
     }
     
     s.translate(s.width/2, s.height);
@@ -89,6 +151,6 @@ export default function (s) {
     s.ellipse(0, -100, 5);
 
     keyPressed();
-    // spawn();
+    spawn();
     }
 }
