@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import request from 'superagent'
 import { url } from '../constants/url'
 import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import store from '../store'
 
 const imgUrls = [
     'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.freepngimg.com%2Fdownload%2Fgalaxy%2F2-2-galaxy-transparent.png&f=1&nofb=1',
@@ -34,23 +36,21 @@ class Lobby extends React.Component {
             .send({ username: this.props.username })
             .then(response => {
                 console.log('response from /room', response.body)
-                // this.updateStatus(response.body.status, response.body.room, this.props.username)
+                store.dispatch({
+                    type: 'UPDATE_STATUS',
+                    payload: response.body
+                })
             })
     }
     
-    // updateStatus = (newStatus, room, player) => {
-    //     this.props.dispatch({
-    //         type: 'UPDATE_STATUS',
-    //         payload: {
-    //             status: newStatus,
-    //             id: room,
-    //             player: player
-    //         }
-    //     })
-    // } 
-    
     render() {
         const { galaxies } = this.props
+        if(this.props.status === 'waiting') {
+            return <Redirect to={`/room/${this.props.roomId}`} /> 
+        }
+        if(this.props.status === 'full') {
+            return <Redirect to={`/room/${this.props.roomId}`} /> 
+        }
         return(
             <div>
                 <CreateGalaxyContainer />
@@ -60,10 +60,10 @@ class Lobby extends React.Component {
                         if(galaxy.status !== 'full') {
                             return(
                                 <div key={galaxy.id} id={galaxy.id} name={galaxy.id}>
-                                    <Link to={`room/${galaxy.id}`}>
+                                    {/* <Link to={`room/${galaxy.id}`}> */}
                                         <h3>{galaxy.galaxyName}</h3>
                                         <img className='galaxies' id={galaxy.id} src={imgUrls[random]} onClick={this.onClick} width='30%' alt='galaxy'></img>
-                                    </Link>
+                                    {/* </Link> */}
                                 </div>
                             )
                         } else {
@@ -81,6 +81,8 @@ function mapStateToProps (state) {
         userId: state.user.id,
         username: state.user.username,
         galaxies: state.galaxies,
+        status: state.galaxy.status,
+        roomId: state.galaxy.room
       }
   }
   

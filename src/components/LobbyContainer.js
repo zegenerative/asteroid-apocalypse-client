@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Lobby from './Lobby'
 import { fetchGalaxies, updateStats } from '../actions/actions'
 import Login from './Login'
-import { Redirect } from 'react-router-dom'
 import { url } from '../constants/url'
 
 class LobbyContainer extends React.Component {
