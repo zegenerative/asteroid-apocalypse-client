@@ -3,7 +3,7 @@ import CreateGalaxyContainer from './CreateGalaxyContainer'
 import { connect } from 'react-redux'
 import request from 'superagent'
 import { url } from '../constants/url'
-
+import { Link } from 'react-router-dom'
 
 const imgUrls = [
     'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.freepngimg.com%2Fdownload%2Fgalaxy%2F2-2-galaxy-transparent.png&f=1&nofb=1',
@@ -34,21 +34,20 @@ class Lobby extends React.Component {
             .send({ username: this.props.username })
             .then(response => {
                 console.log('response from /room', response.body)
-                this.updateStatus(response.body.status, response.body.room, this.props.username)
+                // this.updateStatus(response.body.status, response.body.room, this.props.username)
             })
-        
     }
     
-    updateStatus = (newStatus, room, player) => {
-        this.props.dispatch({
-            type: 'UPDATE_STATUS',
-            payload: {
-                status: newStatus,
-                id: room,
-                player: player
-            }
-        })
-    } 
+    // updateStatus = (newStatus, room, player) => {
+    //     this.props.dispatch({
+    //         type: 'UPDATE_STATUS',
+    //         payload: {
+    //             status: newStatus,
+    //             id: room,
+    //             player: player
+    //         }
+    //     })
+    // } 
     
     render() {
         const { galaxies } = this.props
@@ -61,8 +60,10 @@ class Lobby extends React.Component {
                         if(galaxy.status !== 'full') {
                             return(
                                 <div key={galaxy.id} id={galaxy.id} name={galaxy.id}>
-                                    <h3>{galaxy.galaxyName}</h3>
-                                    <img className='galaxies' id={galaxy.id} src={imgUrls[random]} onClick={this.onClick} width='30%' alt='galaxy'></img>
+                                    <Link to={`room/${galaxy.id}`}>
+                                        <h3>{galaxy.galaxyName}</h3>
+                                        <img className='galaxies' id={galaxy.id} src={imgUrls[random]} onClick={this.onClick} width='30%' alt='galaxy'></img>
+                                    </Link>
                                 </div>
                             )
                         } else {

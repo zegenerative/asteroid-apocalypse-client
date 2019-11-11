@@ -17,12 +17,12 @@ class GameContainer extends Component {
         //console.log('got an event?', event.data)
         const something = JSON.parse(event.data);
         //console.log("data is:",messages)
-        this.props.updateStats(something);
+        // this.props.updateStats(something);
         }
     }
     
     render() {
-        if(this.props.end === false) {
+        if(this.props.end !== false) {
             return (
                 <div>
                     <header><GameStats 
