@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import LobbyContainer from './components/LobbyContainer'
 import GameContainer from './components/GameContainer'
 import Login from './components/Login'
+import WaitingRoom from './components/WaitingRoom'
 // import { connect } from 'react-redux'
 
 export default class App extends Component {
@@ -13,7 +14,8 @@ export default class App extends Component {
       <Provider store={store}>
         <Route exact path='/lobby' component={ LobbyContainer } />
         <Route exact path='/room/:id' component={ GameContainer } />
-        <Route exact path='/' component={Login}/>
+        <Route exact path='/room/:id/waitingroom' component={ WaitingRoom } />
+        <Route exact path='/' component={ Login }/>
       </Provider>
     );
   }

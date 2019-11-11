@@ -6,6 +6,7 @@ export default function (state = initialState, action = {}) {
         case 'UPDATE_SOME_STATS':
             console.log('action.payload.status', action.payload.status)
             const newStatus = action.payload.status
+            console.log('new state:', { ...state, status: newStatus })
             return { ...state, status: newStatus }
         default:
             return state

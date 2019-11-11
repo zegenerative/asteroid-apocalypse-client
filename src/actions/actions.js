@@ -63,10 +63,12 @@ export const createGalaxy = data => (dispatch, getState) => {
     const { user } = state
     const token = user.jwt
     request
+        // .post(`http://localhost:4000/room`)
         .post(`${url}/room`)
         .set('Authorization', `Bearer ${token}`)
         .send(data)
-    .catch(console.error)
+        .then(res => console.log('result', res))
+    .catch(error => console.error('error',error))
 }
 
 // endpoints for score

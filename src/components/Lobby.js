@@ -20,16 +20,23 @@ const imgUrls = [
 class Lobby extends React.Component {
 
     onClick = (event) => {
-        console.log('CLICKED ROOM', )
         const id = event.target.id
+        request
+            .put(`${url}/user/${this.props.userId}`)
+            .set('Authorization', `Bearer ${this.props.token}`)
+            .send({ roomId: id })
+            .then(response => {
+                console.log('response from /user', response.body.roomId)
+            })
         request
             .put(`${url}/room/${id}`)
             .set('Authorization', `Bearer ${this.props.token}`)
             .send({ username: this.props.username })
             .then(response => {
-                console.log('response', response.body.status, response.body.room, this.props.username)
-            this.updateStatus(response.body.status, response.body.room, this.props.username)
+                console.log('response from /room', response.body)
+                this.updateStatus(response.body.status, response.body.room, this.props.username)
             })
+        
     }
     
     updateStatus = (newStatus, room, player) => {
@@ -70,9 +77,9 @@ class Lobby extends React.Component {
 function mapStateToProps (state) {
     return { 
         token: state.user.jwt,
+        userId: state.user.id,
         username: state.user.username,
         galaxies: state.galaxies,
-        roomStatus: state.galaxy.status
       }
   }
   

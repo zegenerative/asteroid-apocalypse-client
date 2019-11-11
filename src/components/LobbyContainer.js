@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Lobby from './Lobby'
 import { fetchGalaxies, updateStats } from '../actions/actions'
 import Login from './Login'
-import WaitingRoom from './WaitingRoom'
 import { Redirect } from 'react-router-dom'
 import { url } from '../constants/url'
 
@@ -15,16 +14,17 @@ class LobbyContainer extends React.Component {
   componentDidMount() {
     //getting all galaxies with mainSource
     this.mainSource.onmessage = event => {
-    const galaxies = JSON.parse(event.data);
-    this.props.fetchGalaxies(galaxies);
+      const galaxies = JSON.parse(event.data);
+      this.props.fetchGalaxies(galaxies);
     }
 
     this.gameSource.onmessage = event => {
-    console.log('SOMETHING CHANGED IN THE WAITING ROOM', event.data)
-    const galaxy = JSON.parse(event.data);
-    if(galaxy !== null && event.data.length > 0) {
-      this.props.updateStats(galaxy);
-    }
+      //event.data is a galaxy object
+      const galaxy = JSON.parse(event.data);
+      console.log('what is galaxy from gameSource?', galaxy)
+      if(galaxy !== null && galaxy.length > 0) {
+        this.props.updateStats(galaxy);
+      }
     }
   }
 
@@ -36,36 +36,12 @@ class LobbyContainer extends React.Component {
     }
     if(!this.props.token) {
       return (
-          <Login />
+        <Login />
       )
-    } else if(this.props.roomStatus === 'empty' && this.props.token) {
+    }
+    if(this.props.token) {
       return (
-        <div>
-          <Lobby 
-            token={this.props.token}
-            username={this.props.username}
-            galaxies={this.props.galaxies}
-          />
-        </div>
-      )
-    } else if(this.props.roomStatus === 'waiting' && this.props.token) {
-      return (
-        <WaitingRoom />
-      )
-    } else if(this.props.roomStatus === 'full' && this.props.token) {
-      console.log('redirecting......')
-      return (
-        <Redirect to={`/room/${this.props.roomId}`}/>
-      )
-    } else if(this.props.roomStatus === 'done' && this.props.token) {
-      return (
-        <div>
-          <Lobby 
-            token={this.props.token}
-            username={this.props.username}
-            galaxies={this.props.galaxies}
-          />
-        </div>
+        <Lobby />
       )
     }
   }
@@ -77,7 +53,8 @@ function mapStateToProps (state) {
       username: state.user.username,
       galaxies: state.galaxies,
       roomStatus: state.galaxy.status,
-      roomId: state.galaxy.id
+      roomId: state.galaxy.id,
+      playerId: state.galaxy.id
     }
 }
 
