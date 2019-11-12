@@ -15,7 +15,10 @@ class GameContainer extends Component {
     componentDidMount() {
         this.gameSource.onmessage = event => {
             const galaxy = JSON.parse(event.data);
-            const status = galaxy.status
+            let status = 'none'
+            if(galaxy) {
+                status = galaxy.status
+            }
             store.dispatch({
                 type: 'UPDATE_STATUS',
                 payload: {
