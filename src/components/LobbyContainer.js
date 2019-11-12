@@ -11,16 +11,13 @@ class LobbyContainer extends React.Component {
   gameSource = new EventSource(`${url}/gameStream/room/${this.props.roomId}`);
 
   componentDidMount() {
-    //getting all galaxies with mainSource
     this.mainSource.onmessage = event => {
       const galaxies = JSON.parse(event.data);
       this.props.fetchGalaxies(galaxies);
     }
 
     this.gameSource.onmessage = event => {
-      //event.data is a galaxy object
       const galaxy = JSON.parse(event.data);
-      console.log('what is galaxy from gameSource?', galaxy)
       if(galaxy !== null && galaxy.length > 0) {
         this.props.updateStats(galaxy);
       }

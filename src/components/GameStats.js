@@ -14,7 +14,7 @@ export default class GameStats extends Component {
                 <h4 style={inlineStyle}>Time:</h4>
                 <h4 style={inlineStyle}>Health:</h4>
                 <h4 style={inlineStyle}>Rank:</h4>
-                <button><h3><Link to={`/lobby`}>Exit space</Link></h3></button>
+                <button><h3><Link to='/lobby'>Exit space</Link></h3></button>
             </div>
         )
     }

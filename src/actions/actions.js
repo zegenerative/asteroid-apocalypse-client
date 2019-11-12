@@ -1,5 +1,5 @@
 import request from 'superagent'
-import {url} from '../constants/url'
+import { url } from '../constants/url'
 
 export const LOGIN = 'LOGIN'
 
@@ -10,17 +10,13 @@ function loginCredentials (payload) {
     }
 }
 
-//data = 'email','password'
 export const login = (username, email, password) => dispatch => {
   request
     .post(`${url}/login`)
     .send({username, email, password})
     .then(response => {
-        //I expect the response to have a jwt
         const action = loginCredentials(response.body)
-        // const action_username = userName(username)
         dispatch(action)
-        // dispatch(action_username)
     })
     .catch(console.error)
 }
@@ -50,7 +46,6 @@ export const getGalaxies = () => (dispatch, getState) => {
       request(`${url}/room`)
         .set('Authorization', `Bearer ${token}`) 
         .then(response => {
-            // console.log('galaxies: ', response.body)
             const action = allGalaxies(response.body)
             dispatch(action)
         })
@@ -63,15 +58,12 @@ export const createGalaxy = data => (dispatch, getState) => {
     const { user } = state
     const token = user.jwt
     request
-        // .post(`http://localhost:4000/room`)
         .post(`${url}/room`)
         .set('Authorization', `Bearer ${token}`)
         .send(data)
         .then(res => console.log('result', res))
     .catch(error => console.error('error',error))
 }
-
-// endpoints for score
 
 // winner
 export const WINNER = 'WINNER'
@@ -182,7 +174,7 @@ export const updateStats = (payload) => ({
     payload
 })
 
-///////////////////////////GAMEACTIONS
+// IMPLEMENT SCORE ACTIONS:
 // export const addCount = current => {
 //   return {
 //     type: "COUNT",

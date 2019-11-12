@@ -34,10 +34,4 @@ class CreateGalaxyContainer extends React.Component {
   }
 }
 
-// function mapStateToProps (state) {
-//   return { 
-//       galaxies: state.galaxies
-//     }
-// }
-
 export default connect(null, { createGalaxy })(CreateGalaxyContainer)

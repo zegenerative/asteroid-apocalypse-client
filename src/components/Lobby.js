@@ -3,7 +3,6 @@ import CreateGalaxyContainer from './CreateGalaxyContainer'
 import { connect } from 'react-redux'
 import request from 'superagent'
 import { url } from '../constants/url'
-import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 import store from '../store'
 
@@ -27,15 +26,12 @@ class Lobby extends React.Component {
             .put(`${url}/user/${this.props.userId}`)
             .set('Authorization', `Bearer ${this.props.token}`)
             .send({ roomId: id })
-            .then(response => {
-                console.log('response from /user', response.body.roomId)
-            })
+            
         request
             .put(`${url}/room/${id}`)
             .set('Authorization', `Bearer ${this.props.token}`)
             .send({ username: this.props.username })
             .then(response => {
-                console.log('response from /room', response.body)
                 store.dispatch({
                     type: 'UPDATE_STATUS',
                     payload: response.body
@@ -60,10 +56,8 @@ class Lobby extends React.Component {
                         if(galaxy.status !== 'full') {
                             return(
                                 <div key={galaxy.id} id={galaxy.id} name={galaxy.id}>
-                                    {/* <Link to={`room/${galaxy.id}`}> */}
-                                        <h3>{galaxy.galaxyName}</h3>
-                                        <img className='galaxies' id={galaxy.id} src={imgUrls[random]} onClick={this.onClick} width='30%' alt='galaxy'></img>
-                                    {/* </Link> */}
+                                    <h3>{galaxy.galaxyName}</h3>
+                                    <img className='galaxies' id={galaxy.id} src={imgUrls[random]} onClick={this.onClick} width='30%' alt='galaxy'></img>
                                 </div>
                             )
                         } else {
