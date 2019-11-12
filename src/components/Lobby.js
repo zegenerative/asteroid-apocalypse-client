@@ -26,7 +26,7 @@ class Lobby extends React.Component {
             .put(`${url}/user/${this.props.userId}`)
             .set('Authorization', `Bearer ${this.props.token}`)
             .send({ roomId: id })
-            
+
         request
             .put(`${url}/room/${id}`)
             .set('Authorization', `Bearer ${this.props.token}`)
@@ -41,11 +41,13 @@ class Lobby extends React.Component {
     
     render() {
         const { galaxies } = this.props
-        if(this.props.status === 'waiting') {
-            return <Redirect to={`/room/${this.props.roomId}`} /> 
-        }
-        if(this.props.status === 'full') {
-            return <Redirect to={`/room/${this.props.roomId}`} /> 
+        if(this.props.roomId !== undefined) {
+            if(this.props.status === 'waiting') {
+                return <Redirect to={`/room/${this.props.roomId}`} /> 
+            }
+            if(this.props.status === 'full') {
+                return <Redirect to={`/room/${this.props.roomId}`} /> 
+            }
         }
         return(
             <div>
