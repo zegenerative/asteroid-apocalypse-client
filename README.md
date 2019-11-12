@@ -3,6 +3,8 @@
 ## What this project is about
 Asteroid Apocalypse is a game project built in 4 days during the Codaisseur web development bootcamp. The aim of the assignment was to build a full-stack multiplayer game app from scratch, implementing technology that supports multiple simultaneous games with a lobby system. The goal of our project was to implement a new technology (p5js) for the creation of custom graphics, and data streams.
 
+![](howtogif.gif)
+
 - **[Client](https://github.com/zegenerative/asteroid-apocalypse-client)**
   The frontend part of the game.
 
