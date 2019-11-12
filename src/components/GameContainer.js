@@ -4,9 +4,8 @@ import sketch1 from './Games/sketch1'
 import { connect } from 'react-redux'
 import { getGalaxyStatus } from '../actions/actions'
 import GameStats from './GameStats'
-import ScoreBoard from './ScoreBoard'
+// import ScoreBoard from './ScoreBoard'
 import { url } from '../constants/url'
-import galaxy from '../reducers/galaxy'
 import store from '../store'
 
 class GameContainer extends Component {
@@ -14,11 +13,9 @@ class GameContainer extends Component {
     gameSource = new EventSource(`${url}/gameStream/room/${this.props.match.params.id}`);
 
     componentDidMount() {
-         //console.log("component did mount",this.source)
         this.gameSource.onmessage = event => {
             const galaxy = JSON.parse(event.data);
             const status = galaxy.status
-            console.log(status)
             store.dispatch({
                 type: 'UPDATE_STATUS',
                 payload: {
@@ -37,7 +34,7 @@ class GameContainer extends Component {
                     <div>
                         <header><GameStats 
                         username={this.props.username}
-                        // score={this.props.score}
+                        score={this.props.score}
                         // winner={this.props.winner}
                         // end={this.props.end}
                         // time={this.props.time}
@@ -47,9 +44,6 @@ class GameContainer extends Component {
                     </div>
                 }
             </div>
-            // <div>
-            //     test
-            // </div>
         )
     }    
 }
@@ -59,8 +53,8 @@ function mapStateToProps (state) {
         token: state.user.jwt,
         username: state.user.username,
         galaxies: state.galaxies,
-        status: state.galaxy.status
-        // score: state.game.score,
+        status: state.galaxy.status,
+        score: state.game.score,
         // winner: state.game.winner,
         // end: state.game.end,
         // time: state.game.time

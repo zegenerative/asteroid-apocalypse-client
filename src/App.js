@@ -6,7 +6,6 @@ import LobbyContainer from './components/LobbyContainer'
 import GameContainer from './components/GameContainer'
 import Login from './components/Login'
 import WaitingRoom from './components/WaitingRoom'
-// import { connect } from 'react-redux'
 
 export default class App extends Component {
   render() {
