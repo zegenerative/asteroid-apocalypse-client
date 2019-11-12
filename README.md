@@ -29,6 +29,8 @@ In the project directory
 3. Run npm start. The app runs in the development mode on http://localhost:3000 in the browser.
 4. Checkout the **[Server ReadMe](https://github.com/zegenerative/asteroid-apocalypse-server)** to install and run the server.
 
+For a more detailed overview of what’s completed and what still needs to be implemented check: **[Project Board](https://github.com/zegenerative/asteroid-apocalypse-server/projects/1)**
+
 ## Create React App
 
 This project was scaffolded using the create-react-app cli.
