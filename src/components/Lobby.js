@@ -55,16 +55,12 @@ class Lobby extends React.Component {
                 <h1>Or choose a galaxy!</h1>
                     { galaxies.map(galaxy => {
                         let random = Math.floor(Math.random() * imgUrls.length)
-                        if(galaxy.status !== 'full') {
                             return(
                                 <div key={galaxy.id} id={galaxy.id} name={galaxy.id}>
                                     <h3>{galaxy.galaxyName}</h3>
                                     <img className='galaxies' id={galaxy.id} src={imgUrls[random]} onClick={this.onClick} width='30%' alt='galaxy'></img>
                                 </div>
                             )
-                        } else {
-                            return <h1 hidden key={galaxy.id}>full</h1>
-                        }
                     })}
             </div>
         )
